@@ -1,7 +1,7 @@
 import { LOGIN_USER, LOGOUT_USER } from "./types";
 
 const initialState = {
-  users: [],
+  users: null,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -15,7 +15,7 @@ export default function loginReducer(state = initialState, action) {
     case LOGOUT_USER:
       return {
         ...state,
-        users: [],
+        users: null,
       };
 
     default:

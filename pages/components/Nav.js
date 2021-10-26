@@ -57,7 +57,7 @@ const Nav = () => {
 
   //LOGIN LOGOUT
   const usersData = useSelector((state) => state.isLogin);
-  const { user } = usersData;
+  const { users } = usersData;
 
   //SEARCH PRODUCT
   const [search, setSearch] = useState("");
@@ -153,7 +153,7 @@ const Nav = () => {
               </div>
             </li>
 
-            {user ? (
+            {users ? (
               <li>
                 <a onClick={(e) => logout(e)} style={{ fontSize: "24px" }}>
                   LogOut
