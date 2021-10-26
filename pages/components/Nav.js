@@ -154,10 +154,17 @@ const Nav = () => {
             </li>
 
             {users ? (
-              <li>
-                <a onClick={(e) => logout(e)} style={{ fontSize: "24px" }}>
-                  LogOut
+              <li class="dropdown">
+                <a
+                  href="javascript:void(0)"
+                  class="dropbtn"
+                  style={{ fontSize: "24px" }}
+                >
+                  {users.name}
                 </a>
+                <div class="dropdown-content">
+                  <a onClick={(e) => logout(e)}>LogOut</a>
+                </div>
               </li>
             ) : (
               <li>

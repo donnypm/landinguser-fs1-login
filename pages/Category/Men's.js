@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import ProductDetail from "react-modal";
 import Head from "next/head";
+import Swal from "sweetalert2";
 
 ProductDetail.setAppElement();
 
@@ -117,7 +118,11 @@ const Products = () => {
                 onClick={() =>
                   dispatch(
                     addCarts(productDet),
-                    alert("Berhasil menambahkan keranjang " + productDet.title)
+                    Swal.fire(
+                      "Berhasil Menambah Keranjang!",
+                      "Product " + productDet.title + " Berhasil di Tambahkan!",
+                      "success"
+                    )
                   )
                 }
               >
@@ -159,7 +164,13 @@ const Products = () => {
                     onClick={() =>
                       dispatch(
                         addCarts(product),
-                        alert("Berhasil menambahkan keranjang " + product.title)
+                        Swal.fire(
+                          "Berhasil Menambah Keranjang!",
+                          "Product " +
+                            product.title +
+                            " Berhasil di Tambahkan!",
+                          "success"
+                        )
                       )
                     }
                   >

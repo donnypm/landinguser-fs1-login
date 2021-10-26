@@ -3,6 +3,7 @@ import Head from "next/head";
 import { loginUser } from "../redux/actions/loginActions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -28,6 +29,8 @@ const Login = () => {
         loggedIn: true,
       })
     );
+    Swal.fire("Welcome " + name, "", "info");
+    router.push("/");
 
     setName("");
     setEmail("");

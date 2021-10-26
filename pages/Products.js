@@ -4,8 +4,9 @@ import { getProducts } from "../redux/actions/productActions";
 import { addCarts } from "../redux/actions/cartActions";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfo, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import ProductDetail from "react-modal";
+import Swal from "sweetalert2";
 
 ProductDetail.setAppElement();
 
@@ -98,7 +99,11 @@ const Products = () => {
                 onClick={() =>
                   dispatch(
                     addCarts(productDet),
-                    alert("Berhasil menambahkan keranjang " + productDet.title)
+                    Swal.fire(
+                      "Berhasil Menambah Keranjang!",
+                      "Product " + productDet.title + " Berhasil di Tambahkan!",
+                      "success"
+                    )
                   )
                 }
               >
@@ -140,7 +145,13 @@ const Products = () => {
                     onClick={() =>
                       dispatch(
                         addCarts(product),
-                        alert("Berhasil menambahkan keranjang " + product.title)
+                        Swal.fire(
+                          "Berhasil Menambah Keranjang!",
+                          "Product " +
+                            product.title +
+                            " Berhasil di Tambahkan!",
+                          "success"
+                        )
                       )
                     }
                   >
