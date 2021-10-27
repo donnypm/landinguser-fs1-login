@@ -40,7 +40,7 @@ const Login = () => {
 
     typeof window !== "undefined" && Cookie.set("token", "user");
 
-    router.push("/protected");
+    router.push("/");
 
     setName("");
     setEmail("");
