@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { loginUser } from "../redux/actions/loginActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/dist/client/router";
 import Swal from "sweetalert2";
+import Cookie from "js-cookie";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,12 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    if (Cookie.get("token")) {
+      router.push("/");
+    }
+  }, []);
 
   const handleToHome = (e) => {
     e.preventDefault();
@@ -30,7 +37,10 @@ const Login = () => {
       })
     );
     Swal.fire("Welcome " + name, "", "info");
-    router.push("/");
+
+    typeof window !== "undefined" && Cookie.set("token", "user");
+
+    router.push("/protected");
 
     setName("");
     setEmail("");

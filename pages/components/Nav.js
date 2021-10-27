@@ -7,6 +7,7 @@ import styles from "../../styles/CartPage.module.scss";
 import { searchProducts } from "../../redux/actions/searchProducts";
 import { useState, useEffect } from "react";
 import { logoutUser } from "../../redux/actions/loginActions";
+import Cookies from "js-cookie";
 
 const Nav = () => {
   const router = useRouter();
@@ -52,20 +53,21 @@ const Nav = () => {
 
   const handleToLogin = (e) => {
     e.preventDefault();
-    router.push("../../Login");
+    router.push("/Login");
   };
 
   //LOGIN LOGOUT
   const usersData = useSelector((state) => state.isLogin);
   const { users } = usersData;
 
+  const logout = () => {
+    // e.preventDefault;
+    dispatch(logoutUser());
+    Cookies.remove("token");
+  };
+
   //SEARCH PRODUCT
   const [search, setSearch] = useState("");
-
-  const logout = (e) => {
-    e.preventDefault;
-    dispatch(logoutUser());
-  };
 
   useEffect(() => {
     dispatch(searchProducts(search));
@@ -153,7 +155,7 @@ const Nav = () => {
               </div>
             </li>
 
-            {users ? (
+            {users && Cookies.get("token") ? (
               <li class="dropdown">
                 <a
                   href="javascript:void(0)"
@@ -163,7 +165,7 @@ const Nav = () => {
                   {users.name}
                 </a>
                 <div class="dropdown-content">
-                  <a onClick={(e) => logout(e)}>LogOut</a>
+                  <a onClick={logout}>LogOut</a>
                 </div>
               </li>
             ) : (
