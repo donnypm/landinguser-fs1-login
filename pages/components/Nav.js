@@ -7,6 +7,7 @@ import styles from "../../styles/CartPage.module.scss";
 import { searchProducts } from "../../redux/actions/searchProducts";
 import { useState, useEffect } from "react";
 import { logoutUser } from "../../redux/actions/loginActions";
+import Cookies from "js-cookie";
 
 const Nav = () => {
   const router = useRouter();
@@ -15,6 +16,12 @@ const Nav = () => {
 
   const allCartsData = useSelector((state) => state.Carts);
   const { cart } = allCartsData;
+
+  // const login = useSelector(state => state.isLogin)
+
+  // const {users} = login
+
+  // console.log(users)
 
   const getItemsCount = () => {
     return cart.reduce((accumulator, item) => accumulator + item.quantity, 0);
@@ -52,19 +59,23 @@ const Nav = () => {
 
   const handleToLogin = (e) => {
     e.preventDefault();
-    router.push("../../Login");
+    router.push("/Login");
   };
 
   //LOGIN LOGOUT
   const usersData = useSelector((state) => state.isLogin);
-  const { user } = usersData;
+  const { users} = usersData;
+
+  console.log(usersData)
 
   //SEARCH PRODUCT
   const [search, setSearch] = useState("");
 
-  const logout = (e) => {
-    e.preventDefault;
+  const logout = () => {
+    // e.preventDefault;
     dispatch(logoutUser());
+    Cookies.remove('token')
+    router.push('/Login')
   };
 
   useEffect(() => {
@@ -112,7 +123,7 @@ const Nav = () => {
             <li>
               <a>
                 <FontAwesomeIcon icon={faCartPlus} size="2x" />
-                <span class="badge badge-warning" id="lblCartCount">
+                <span className="badge badge-warning" id="lblCartCount">
                   {getItemsCount()}
                 </span>
               </a>
@@ -153,9 +164,9 @@ const Nav = () => {
               </div>
             </li>
 
-            {user ? (
+            {users ? (
               <li>
-                <a onClick={(e) => logout(e)} style={{ fontSize: "24px" }}>
+                <a onClick={logout} style={{ fontSize: "24px" }}>
                   LogOut
                 </a>
               </li>

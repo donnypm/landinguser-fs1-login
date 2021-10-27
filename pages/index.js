@@ -2,6 +2,7 @@ import Head from "next/head";
 import Products from "./Products";
 
 export default function Home(handleEdit) {
+  // console.log('hello world')
   return (
     <div className="content">
       <Head>

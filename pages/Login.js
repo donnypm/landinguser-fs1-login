@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { loginUser } from "../redux/actions/loginActions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
+import Cookie from 'js-cookie'
+import { requireAuthentication } from "../utils/useAuth";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -11,6 +13,14 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    if (Cookie.get('token')) {
+      router.push('/')
+    }
+  }, [])
+
+
 
   const handleToHome = (e) => {
     e.preventDefault();
@@ -29,9 +39,13 @@ const Login = () => {
       })
     );
 
+
+    typeof window !== 'undefined' && Cookie.set('token', 'user')
+
     setName("");
     setEmail("");
     setPassword("");
+    router.push('/protected')
   };
 
   return (
@@ -69,3 +83,12 @@ const Login = () => {
 };
 
 export default Login;
+
+
+// export const getServerSideProps = requireAuthentication(context => {
+//   return {
+//       props: {
+//           data: []
+//       }
+//   }
+// })

@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
+  console.log('sfs')
   return (
     <div>
       <Navbar />

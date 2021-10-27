@@ -149,7 +149,7 @@ const Products = () => {
 
                   <a
                     onClick={() =>
-                      setdescModalIsOpen(true) & handleEdit(product)
+                      setdescModalIsOpen(true) && handleEdit(product)
                     }
                   >
                     <button className="btn-detail">Detail Product</button>

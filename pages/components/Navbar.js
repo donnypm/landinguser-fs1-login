@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const router = useRouter();
+  console.log('hello worldff')
 
   const allCartsData = useSelector((state) => state.Carts);
   const { cart } = allCartsData;
@@ -79,7 +80,7 @@ const Navbar = () => {
           <li className="nav-item" style={{ width: "200px" }}>
             <a onClick={handleToCart}>
               <FontAwesomeIcon icon={faCartPlus} size="2x" />
-              <span class="badge badge-warning" id="lblCartCount">
+              <span className="badge badge-warning" id="lblCartCount">
                 {getItemsCount()}
               </span>
             </a>
