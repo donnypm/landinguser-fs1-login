@@ -3,7 +3,7 @@ import Head from "next/head";
 import { loginUser } from "../redux/actions/loginActions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
-import Cookie from 'js-cookie'
+import Cookie from "js-cookie";
 import { requireAuthentication } from "../utils/useAuth";
 
 const Login = () => {
@@ -15,12 +15,10 @@ const Login = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (Cookie.get('token')) {
-      router.push('/')
+    if (Cookie.get("token")) {
+      router.push("/");
     }
-  }, [])
-
-
+  }, []);
 
   const handleToHome = (e) => {
     e.preventDefault();
@@ -39,13 +37,12 @@ const Login = () => {
       })
     );
 
-
-    typeof window !== 'undefined' && Cookie.set('token', 'user')
+    typeof window !== "undefined" && Cookie.set("token", "user");
 
     setName("");
     setEmail("");
     setPassword("");
-    router.push('/protected')
+    router.push("/protected");
   };
 
   return (
@@ -83,7 +80,6 @@ const Login = () => {
 };
 
 export default Login;
-
 
 // export const getServerSideProps = requireAuthentication(context => {
 //   return {
