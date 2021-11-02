@@ -46,7 +46,7 @@ const Login = () => {
       )
       .then((json) => console.log(json));
 
-    Swal.fire("Welcome " + email, "", "info");
+    Swal.fire("Welcome", "", "info");
 
     router.push("/");
 
