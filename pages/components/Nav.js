@@ -1,6 +1,10 @@
 import Image from "next/dist/client/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartPlus,
+  faEnvelope,
+  faBell,
+} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/dist/client/router";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../../styles/CartPage.module.scss";
@@ -56,6 +60,11 @@ const Nav = () => {
     router.push("/Login");
   };
 
+  const handleToProtected = (e) => {
+    e.preventDefault();
+    router.push("/protected");
+  };
+
   //LOGIN LOGOUT
   const usersData = useSelector((state) => state.isLogin);
   const { users } = usersData;
@@ -63,6 +72,7 @@ const Nav = () => {
   const logout = () => {
     // e.preventDefault;
     dispatch(logoutUser());
+    router.push("/Login");
     Cookies.remove("token");
   };
 
@@ -155,19 +165,32 @@ const Nav = () => {
               </div>
             </li>
 
-            {users && Cookies.get("token") ? (
-              <li class="dropdown">
-                <a
-                  href="javascript:void(0)"
-                  class="dropbtn"
-                  style={{ fontSize: "24px" }}
-                >
-                  {users.name}
-                </a>
-                <div class="dropdown-content">
-                  <a onClick={logout}>LogOut</a>
-                </div>
-              </li>
+            {users ? (
+              <>
+                <li>
+                  <FontAwesomeIcon icon={faBell} size="2x" />
+                </li>
+                <li>
+                  <FontAwesomeIcon icon={faEnvelope} size="2x" />
+                </li>
+                <li>
+                  <a onClick={logout} style={{ fontSize: "24px" }}>
+                    LogOut
+                  </a>
+                </li>
+                <li class="dropdown">
+                  <a
+                    href="javascript:void(0)"
+                    class="dropbtn"
+                    style={{ fontSize: "24px" }}
+                  >
+                    {users.username}
+                  </a>
+                  <div class="dropdown-content">
+                    <a onClick={logout}>LogOut</a>
+                  </div>
+                </li>
+              </>
             ) : (
               <li>
                 <a onClick={handleToLogin} style={{ fontSize: "24px" }}>
@@ -175,6 +198,12 @@ const Nav = () => {
                 </a>
               </li>
             )}
+            <li>
+              <a onClick={handleToProtected} style={{ fontSize: "12px" }}>
+                Protected <br />
+                Page
+              </a>
+            </li>
           </div>
         </ul>
       </nav>

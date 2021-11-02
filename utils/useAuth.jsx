@@ -1,10 +1,22 @@
+import cookie from "cookie";
+
 export function requireAuthentication(gssp) {
   return async (context) => {
     const { req } = context;
 
     // console.log(context.resolvedUrl === "/Login")
 
-    const token = req.headers.cookie ? true : false; // Add logic to extract token from `req.headers.cookie`
+    let isLogin = false;
+
+    if (req.headers.cookie) {
+      const isTokenCorrect = cookie.parse(req.headers.cookie);
+
+      if (isTokenCorrect.token) {
+        isLogin = true;
+      } else {
+        isLogin = false;
+      }
+    }
 
     // console.log(req?.headers)
 
@@ -19,7 +31,7 @@ export function requireAuthentication(gssp) {
     //     };
     // }
 
-    if (!token) {
+    if (!isLogin) {
       // Redirect to login page
       return {
         redirect: {

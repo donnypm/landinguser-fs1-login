@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/dist/client/router";
 import Swal from "sweetalert2";
 import Cookie from "js-cookie";
+import axios from "axios";
 
 const Login = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,29 +20,36 @@ const Login = () => {
     }
   }, []);
 
-  const handleToHome = (e) => {
-    e.preventDefault();
-    router.push("/");
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(
       loginUser({
-        name: name,
         email: email,
         password: password,
         loggedIn: true,
       })
     );
-    Swal.fire("Welcome " + name, "", "info");
 
-    typeof window !== "undefined" && Cookie.set("token", "user");
+    const token = fetch(
+      "https://my-udemy-api.herokuapp.com/api/v1/user/signin",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
+    )
+      .then((response) => response.json())
+      .then(
+        (json) =>
+          typeof window !== "undefined" && Cookie.set("token", json.token)
+      )
+      .then((json) => console.log(json));
+
+    Swal.fire("Welcome " + email, "", "info");
 
     router.push("/");
 
-    setName("");
     setEmail("");
     setPassword("");
   };
@@ -57,14 +64,8 @@ const Login = () => {
         <h1>Login here 🚪</h1>
         <input
           type="name"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="email"
+          placeholder="Username"
           value={email}
-          placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <input

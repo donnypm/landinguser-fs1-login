@@ -12,8 +12,9 @@ import styles from "../styles/CartPage.module.scss";
 import Image from "next/dist/client/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { requireAuthentication } from "../utils/useAuth";
 
-const Carts = () => {
+export default function Carts(props) {
   const dispatch = useDispatch();
   const allCartsData = useSelector((state) => state.Carts);
   const { cart } = allCartsData;
@@ -92,6 +93,14 @@ const Carts = () => {
       )}
     </div>
   );
-};
+}
 
-export default Carts;
+// export default Carts;
+
+export const getServerSideProps = requireAuthentication((context) => {
+  return {
+    props: {
+      data: [],
+    },
+  };
+});
