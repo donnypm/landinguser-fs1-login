@@ -133,7 +133,7 @@ const Nav = () => {
                   <center>
                     <h1 style={{ marginTop: "100px" }}>Your Cart is Empty!</h1>
                   </center>
-                ) : (
+                ) : users ? (
                   <>
                     <div className="header-navcart">
                       <h1>Cart</h1>
@@ -160,6 +160,10 @@ const Nav = () => {
                         <p>$ {item.price}</p>
                       </div>
                     ))}
+                  </>
+                ) : (
+                  <>
+                    <h1>Please LogIn to See Your Cart Again</h1>
                   </>
                 )}
               </div>

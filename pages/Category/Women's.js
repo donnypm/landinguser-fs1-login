@@ -8,6 +8,7 @@ import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import ProductDetail from "react-modal";
 import Head from "next/head";
 import Swal from "sweetalert2";
+import { useRouter } from "next/dist/client/router";
 
 ProductDetail.setAppElement();
 
@@ -62,6 +63,17 @@ const Products = () => {
     console.log("Product = " + product.id);
   };
 
+  // JIKA INGIN ADD TO CART USER HARUS LOGIN DAHULU
+  const usersData = useSelector((state) => state.isLogin);
+  const { users } = usersData;
+
+  const router = useRouter();
+
+  const handleToLogin = (e) => {
+    e.preventDefault();
+    router.push("/Login");
+  };
+
   return (
     <section>
       <Head>
@@ -112,21 +124,29 @@ const Products = () => {
             </div>
 
             <div className="add-to-cart">
-              <button
-                className="cart-btn"
-                onClick={() =>
-                  dispatch(
-                    addCarts(productDet),
-                    Swal.fire(
-                      "Berhasil Menambah Keranjang!",
-                      "Product " + productDet.title + " Berhasil di Tambahkan!",
-                      "success"
+              {users ? (
+                <button
+                  className="cart-btn"
+                  onClick={() =>
+                    dispatch(
+                      addCarts(productDet),
+                      Swal.fire(
+                        "Berhasil Menambah Keranjang!",
+                        "Product " +
+                          productDet.title +
+                          " Berhasil di Tambahkan!",
+                        "success"
+                      )
                     )
-                  )
-                }
-              >
-                Add to cart
-              </button>
+                  }
+                >
+                  Add to cart
+                </button>
+              ) : (
+                <button className="cart-btn" onClick={handleToLogin}>
+                  Add to cart
+                </button>
+              )}
             </div>
           </div>
         </section>
@@ -158,23 +178,29 @@ const Products = () => {
                   </p>
                 </div>
                 <div className="atc-card">
-                  <button
-                    className="cart-btn-card"
-                    onClick={() =>
-                      dispatch(
-                        addCarts(product),
-                        Swal.fire(
-                          "Berhasil Menambah Keranjang!",
-                          "Product " +
-                            product.title +
-                            " Berhasil di Tambahkan!",
-                          "success"
+                  {users ? (
+                    <button
+                      className="cart-btn-card"
+                      onClick={() =>
+                        dispatch(
+                          addCarts(product),
+                          Swal.fire(
+                            "Berhasil Menambah Keranjang!",
+                            "Product " +
+                              product.title +
+                              " Berhasil di Tambahkan!",
+                            "success"
+                          )
                         )
-                      )
-                    }
-                  >
-                    Add to cart
-                  </button>
+                      }
+                    >
+                      Add to cart
+                    </button>
+                  ) : (
+                    <button className="cart-btn-card" onClick={handleToLogin}>
+                      Add to cart
+                    </button>
+                  )}
 
                   <a
                     onClick={() =>
